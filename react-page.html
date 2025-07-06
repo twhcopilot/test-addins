@@ -1,0 +1,135 @@
+<!-- react-page.html -->
+<!DOCTYPE html>
+<html>
+<head>
+  <title>React Hello World Page</title>
+  <meta charset="utf-8" />
+  <style>
+    body { 
+      font-family: Arial, sans-serif; 
+      margin: 20px; 
+      background-color: #f5f5f5;
+    }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 40px;
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    h1 { 
+      color: #0078D7; 
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .react-component {
+      text-align: center;
+      padding: 20px;
+      border: 2px solid #0078D7;
+      border-radius: 8px;
+      background-color: #f8f9fa;
+    }
+    .hello-world {
+      font-size: 24px;
+      color: #333;
+      margin: 20px 0;
+    }
+    .react-info {
+      color: #666;
+      font-style: italic;
+      margin-top: 15px;
+    }
+    button {
+      padding: 10px 15px;
+      background-color: #0078D7;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 4px;
+      margin: 10px 5px;
+    }
+    button:hover {
+      background-color: #005EA6;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>React Hello World Page</h1>
+    <div id="react-root"></div>
+  </div>
+
+  <script>
+    // React-style Hello World Component (using vanilla JavaScript)
+    class HelloWorldComponent {
+      constructor(containerId) {
+        this.container = document.getElementById(containerId);
+        this.state = {
+          clickCount: 0,
+          message: "Hello World from React!"
+        };
+        this.render();
+      }
+
+      setState(newState) {
+        this.state = { ...this.state, ...newState };
+        this.render();
+      }
+
+      handleClick() {
+        const newCount = this.state.clickCount + 1;
+        let newMessage;
+        
+        if (newCount % 3 === 0) {
+          newMessage = "Hello World from React! 🎉";
+        } else if (newCount % 3 === 1) {
+          newMessage = "Hello World from React! ⭐";
+        } else {
+          newMessage = "Hello World from React! 💫";
+        }
+
+        this.setState({
+          clickCount: newCount,
+          message: newMessage
+        });
+      }
+
+      resetCounter() {
+        this.setState({
+          clickCount: 0,
+          message: "Hello World from React!"
+        });
+      }
+
+      render() {
+        this.container.innerHTML = `
+          <div class="react-component">
+            <div class="hello-world">${this.state.message}</div>
+            <div class="react-info">
+              This is a React-style component running in the browser!
+            </div>
+            <div style="margin-top: 20px;">
+              <button id="click-btn">
+                Click me! (Clicked ${this.state.clickCount} times)
+              </button>
+              <button id="reset-btn">
+                Reset
+              </button>
+            </div>
+          </div>
+        `;
+
+        // Re-attach event listeners after render
+        document.getElementById('click-btn').addEventListener('click', () => this.handleClick());
+        document.getElementById('reset-btn').addEventListener('click', () => this.resetCounter());
+      }
+    }
+
+    // Initialize the component when the page loads
+    document.addEventListener('DOMContentLoaded', () => {
+      new HelloWorldComponent('react-root');
+    });
+  </script>
+</body>
+</html>
